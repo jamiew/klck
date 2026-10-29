@@ -133,13 +133,15 @@ the mic prompt comes back after each build.
 
 ```
 Package.swift                 SwiftPM manifest (macOS 13+ / iOS 16+)
-Makefile                      build/run/clean + ios-project targets
+Makefile                      build/test/snapshot/run + ios-project targets
+AGENTS.md                     notes for coding agents (CLAUDE.md links here)
 build_app.sh                  swift build + macOS .app assembly
 project.yml                   XcodeGen spec for the iOS app
 Resources/Info.plist          macOS bundle metadata
 Resources/Klck-iOS-Info.plist iOS bundle metadata
 Sources/Klck/                 shared sources (macOS + iOS)
   KlckApp.swift               @main App entry (cross-platform Scene)
+  Snapshot.swift              --snapshot offscreen PNG render (macOS)
   Audio/AudioEngine.swift     sample-accurate render engine
   Model/                      MetronomeModel, SubLayer, Preset
   Views/                      SwiftUI interface
