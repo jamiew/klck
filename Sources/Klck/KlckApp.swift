@@ -5,6 +5,13 @@ struct KlckApp: App {
     @StateObject private var model = MetronomeModel()
     @StateObject private var tuner = Tuner()
 
+    init() {
+        #if os(macOS)
+        // Exits the process when launched with --snapshot; see Snapshot.swift.
+        Snapshot.runIfRequested()
+        #endif
+    }
+
     var body: some Scene {
         WindowGroup("Klck") {
             content

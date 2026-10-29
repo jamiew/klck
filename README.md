@@ -67,7 +67,7 @@ make version      # or: swift --version
 
 ```sh
 make            # build + assemble Klck.app  (default target)
-make run        # build, then launch the app
+make run        # build, quit any running copy, then launch the app
 make run-console  # launch with log output in the terminal
 ```
 
@@ -78,15 +78,23 @@ Other targets:
 
 ```sh
 make help       # list all targets
-make debug      # debug build
-make check      # type-check only (no bundle)
+make check      # build + tests (quiet; the pre-commit gate)
+make test       # tests only; prints failures and a one-line summary
+make snapshot   # render the window to build/snapshot.png, no window opens
+make logs       # stream the running app's logs
 make release    # clean, then build a fresh bundle
-make clean      # remove .build/ and Klck.app
+make clean      # remove .build/, build/ and Klck.app
 ```
 
-Under the hood, `make app` runs `./build_app.sh`, which does
+`make CONFIG=debug` builds a debug bundle. `make snapshot SIZE=620x2000
+SNAPSHOT=/tmp/klck.png` renders a taller window to another path.
+
+Under the hood, `make build` runs `./build_app.sh`, which does
 `swift build -c release`, copies the binary and `Resources/Info.plist` into a
-`.app` layout, and ad-hoc code-signs it so macOS will run it locally.
+`.app` layout, and code-signs it. It uses your first Apple Development
+certificate when there is one, so macOS remembers the microphone permission
+across rebuilds. Without one, or with `SIGN_IDENTITY=-`, it signs ad-hoc and
+the mic prompt comes back after each build.
 
 ## Usage
 
